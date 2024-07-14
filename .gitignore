@@ -1,0 +1,19 @@
+# Python/Django
+myenv/
+*.pyc
+*.pyo
+__pycache__/
+
+# Django SQLite database
+db.sqlite3
+
+# IDE files
+.vscode/
+
+# Environment files
+.env
+.env.local
+
+# Node.js/npm
+node_modules/
+.npm/
