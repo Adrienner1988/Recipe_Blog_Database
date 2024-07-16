@@ -15,10 +15,11 @@ class RecipeList(generics.ListCreateAPIView):
 class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+    lookup_field = 'pk' 
 
 class RecipeComments(generics.ListAPIView):
     serializer_class = CommentsSerializer
 
     def get_queryset(self):
-        recipe_id = self.kwargs['id']
+        recipe_id = self.kwargs['pk']
         return Comment.objects.filter(recipe_id=recipe_id)

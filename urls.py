@@ -6,9 +6,9 @@ from recipe import views
 urlpatterns = [
     path('recipes/', RecipeList.as_view(), name='recipe-list'),
     #127.0.0.1:8000/recipes path
-    path('recipes/<id>/', RecipeDetail.as_view(), name='recipe-detail'),
+    path('recipes/<int:pk>/', RecipeDetail.as_view(), name='recipe-detail'),
     #127.0.0.1:8000/recipes/id path
-    path('recipes/<id>/comments/', RecipeComments.as_view(), name='recipe_comments'),
+    path('recipes/<int:pk>/comments/', RecipeComments.as_view(), name='recipe_comments'),
     #127.0.0.1:8000/recipes/id/comments path
 ]
 
