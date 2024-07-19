@@ -4,6 +4,8 @@ from .views import RecipeList, RecipeDetail, RecipeComments
 from recipe import views
 
 urlpatterns = [
+    path('', views.index, name='index'),
+    #127.0.0.1:800
     path('recipes/', RecipeList.as_view(), name='recipe-list'),
     #127.0.0.1:8000/recipes path
     path('recipes/<int:pk>/', RecipeDetail.as_view(), name='recipe-detail'),
