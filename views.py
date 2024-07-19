@@ -3,7 +3,6 @@ from rest_framework import generics
 from .models import Recipe, Comment
 from .serializers import RecipeSerializer, CommentsSerializer
 from django.shortcuts import render
-# from django.http import HttpResponse 
 
 def index(request):
     return render(request, 'index.html')
