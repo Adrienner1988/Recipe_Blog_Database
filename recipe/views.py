@@ -2,7 +2,8 @@
 from rest_framework import generics
 from .models import Recipe, Comment
 from .serializers import RecipeSerializer, CommentsSerializer
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from .forms import RecipeForm
 
 def index(request):
     return render(request, 'index.html')
@@ -22,3 +23,13 @@ class RecipeComments(generics.ListAPIView):
     def get_queryset(self):
         recipe_id = self.kwargs['pk']
         return Comment.objects.filter(recipe_id=recipe_id)
+    
+def add_recipe(request):
+    if request.method == 'POST':
+        form = RecipeForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('recipe_detail')
+        else:
+            form = RecipeForm()
+        return render(request, 'add_recipe.html', {'form': form})
