@@ -73,3 +73,10 @@ def recipe_list(request):
 class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+
+class RecipeListByCategory(generics.ListAPIView):
+    serializer_class = RecipeSerializer
+
+    def get_queryset(self):
+        category_id = self.kwargs['category_id']
+        return Recipe.objects.filter(category_id=category_id)
