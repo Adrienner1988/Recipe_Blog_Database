@@ -1,8 +1,8 @@
 # Create your views here.
 from rest_framework import generics
 import recipe
-from .models import Recipe, Comment
-from .serializers import RecipeSerializer, CommentsSerializer
+from .models import Recipe, Comment, Category
+from .serializers import RecipeSerializer, CommentsSerializer, CategorySerializer
 from django.shortcuts import render, redirect
 from .forms import RecipeForm
 from django.http import JsonResponse
@@ -68,3 +68,8 @@ def recipe_list(request):
     ]
     
     return JsonResponse(recipe_data, safe=False)
+
+# Query recipe categories
+class CategoryList(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
