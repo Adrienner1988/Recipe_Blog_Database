@@ -45,12 +45,15 @@ def add_recipe(request):
 def recipe_list(request):
     title_query = request.GET.get('title', '')
     ingredient_query = request.GET.get('ingredient', '')
+    category_query = request.GET.get('category', '')
 
     filters = Q()
     if title_query:
         filters &= Q(title__icontains=title_query)
     if ingredient_query:
         filters &= Q(ingredients__icontains=ingredient_query)
+    if category_query:
+        filters &= Q(category_id=category_query)
 
     # Filter recipes based on constructed filters
     recipes = Recipe.objects.filter(filters).distinct()

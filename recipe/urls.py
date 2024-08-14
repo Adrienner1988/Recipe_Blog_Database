@@ -19,7 +19,7 @@ urlpatterns = [
     #127.0.0.1:8000/recipes/search
     path('categories/', CategoryList.as_view(), name='category-list'),
     #127.0.0.1:8000/recipes/id/categories
-    path('categories/<int:category_pk/recipes', RecipeListByCategory.as_view(), name='recipe_list_by_category'),
+    path('categories/<int:category_pk>/recipes', RecipeListByCategory.as_view(), name='recipe_list_by_category'),
 ]
 
 

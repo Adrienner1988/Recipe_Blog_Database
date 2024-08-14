@@ -13,6 +13,7 @@ class CommentsSerializer(serializers.ModelSerializer):
 
 class RecipeSerializer(serializers.ModelSerializer):
     comments = CommentsSerializer(many=True, read_only=True)
+    category = CategorySerializer()
     
     class Meta:
         model = Recipe

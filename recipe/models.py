@@ -12,7 +12,7 @@ class Recipe(models.Model):
     ingredients = models.TextField()
     steps = models.TextField()
     image = models.ImageField(upload_to='recipe/images/', null=True, blank=True)
-    category = models.ForeignKey(Category, related_name='recipes', on_delete=models.CASCADE) 
+    category = models.ForeignKey(Category, related_name='recipes', on_delete=models.CASCADE, null=True, blank=True) 
 
     def __str__(self):
         return self.title
