@@ -1,12 +1,13 @@
 # Create your views here.
 from rest_framework import generics
 import recipe
-from .models import Recipe, Comment, Category
-from .serializers import RecipeSerializer, CommentsSerializer, CategorySerializer
+from .models import Recipe, Comment, Category, Servings, TimeOption
+from .serializers import RecipeSerializer, CommentsSerializer, CategorySerializer, ServingsSerializer, TimeOptionSerializer
 from django.shortcuts import render, redirect
 from .forms import RecipeForm
 from django.http import JsonResponse
 from django.db.models import Q
+
 
 def index(request):
     return render(request, 'index.html')
@@ -83,3 +84,15 @@ class RecipeListByCategory(generics.ListAPIView):
     def get_queryset(self):
         category_id = self.kwargs['category_id']
         return Recipe.objects.filter(category_id=category_id)
+
+# Query time options
+class TimeOption(generics.ListAPIView):
+    queryset = TimeOption.objects.all()
+    serializer_class = TimeOptionSerializer
+
+# Query serving amount
+class Servings(generics.ListAPIView):
+    queryset = Servings.objects.all()
+    serializer_class = ServingsSerializer
+
+

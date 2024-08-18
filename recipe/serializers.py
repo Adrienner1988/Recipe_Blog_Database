@@ -1,5 +1,15 @@
 from rest_framework import serializers
-from .models import Recipe, Comment, Category
+from .models import Recipe, Comment, Category, Servings, TimeOption
+
+class TimeOptionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TimeOption
+        fields = '__all__'
+
+class ServingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Servings
+        fields = '__all__'
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
