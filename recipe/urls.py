@@ -20,6 +20,12 @@ urlpatterns = [
     path('categories/', CategoryList.as_view(), name='category-list'),
     #127.0.0.1:8000/recipes/id/categories
     path('categories/<int:category_pk>/recipes', RecipeListByCategory.as_view(), name='recipe_list_by_category'),
+    #127.0.0.1:8000/recipes/serving-options
+    path('servings-options/', views.ServingsListView.as_view(), name='servings-list'),
+    #127.0.0.1:8000/recipes/prep-options
+    path('prep-options/', views.TimeOptionPrepListView.as_view(), name='prep-list'),
+    #127.0.0.1:8000/recipes/cook-options
+    path('cook-options/', views.TimeOptionCookListView.as_view(), name='cook-list'),
 ]
 
 
