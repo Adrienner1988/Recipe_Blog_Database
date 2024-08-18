@@ -8,7 +8,7 @@ class Category(models.Model):
         return self.name
     
 class TimeOption(models.Model):
-    value = models.CharField(max_length=20, null=True, unique=True)
+    value = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
         return self.value
