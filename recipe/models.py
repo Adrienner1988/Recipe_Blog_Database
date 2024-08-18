@@ -15,6 +15,9 @@ class TimeOption(models.Model):
     
 class Servings(models.Model):
     size = models.CharField(max_length=20, unique=True)
+
+    def __str__(self):
+        return self.size
     
 class Recipe(models.Model):
     title = models.CharField(max_length=100)
