@@ -1,6 +1,5 @@
 # Create your views here.
 from rest_framework import generics
-import recipe
 from .models import Recipe, Comment, Category, Servings, TimeOption
 from .serializers import RecipeSerializer, CommentsSerializer, CategorySerializer, ServingsSerializer, TimeOptionSerializer
 from django.shortcuts import render, redirect
@@ -13,16 +12,27 @@ def index(request):
     return render(request, 'index.html')
 
 # Get Recipes
-class RecipeList(generics.ListCreateAPIView):
+# ListCreateAPIView when you want to support both retrieving a list of objects and creating an object at the same endpoint without needing to write the code for both actions separately.
+class Recipes(generics.ListCreateAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+
+def add_recipe(request):
+    if request.method == 'POST': #Checks if the form is being submitted (POST request).
+        form = RecipeForm(request.POST, request.FILES) #Instantiates the form with the data from the POST request and any uploaded files.
+        if form.is_valid(): #Validates the form data.
+            form.save() #Saves the form data as a new recipe in the database.
+            return redirect('recipe-list') #Redirects to list of all recipes after successfully adding a recipe.
+    else:
+        form = RecipeForm() 
+    return render(request, 'add_recipe.html', {'form': form}) #Renders the add_recipe.html template, passing the form instance to the template context.
 
 # Get the details of the recipes by the pk/id
 class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
     lookup_field = 'pk' 
-
+    
 # Get the recipe comments by the pk/id
 class RecipeComments(generics.ListAPIView):
     serializer_class = CommentsSerializer
@@ -30,17 +40,6 @@ class RecipeComments(generics.ListAPIView):
     def get_queryset(self):
         recipe_id = self.kwargs['pk']
         return Comment.objects.filter(recipe_id=recipe_id)
-
-# Allow user to add a recipe
-def add_recipe(request):
-    if request.method == 'POST':
-        form = RecipeForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('recipe_detail', pk=recipe.pk)
-        else:
-            form = RecipeForm()
-        return render(request, 'add_recipe.html', {'form': form})
     
 #Allow user to search recipes 
 def recipe_list(request):
@@ -86,12 +85,12 @@ class RecipeListByCategory(generics.ListAPIView):
         return Recipe.objects.filter(category_id=category_id)
 
 # Query time options
-class TimeOption(generics.ListAPIView):
+class TimeOption(generics.ListCreateAPIView):
     queryset = TimeOption.objects.all()
     serializer_class = TimeOptionSerializer
 
-# Query serving amount
-class Servings(generics.ListAPIView):
+# Query serving amounts
+class Servings(generics.ListCreateAPIView):
     queryset = Servings.objects.all()
     serializer_class = ServingsSerializer
 

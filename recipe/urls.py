@@ -1,13 +1,11 @@
-from operator import index
 from django.urls import path
-from .views import RecipeList, RecipeDetail, RecipeComments, RecipeListByCategory, CategoryList, TimeOption
+from .views import Recipes, RecipeDetail, RecipeComments, RecipeListByCategory, CategoryList, TimeOption, Servings, add_recipe, recipe_list
 from recipe import views
-from .views import add_recipe, recipe_list
 
 urlpatterns = [
     path('', views.index, name='index'),
     #127.0.0.1:800
-    path('recipes/', RecipeList.as_view(), name='recipe-list'),
+    path('recipes/', Recipes.as_view(), name='recipe-list'),
     #127.0.0.1:8000/recipes path
     path('recipes/<int:pk>/', RecipeDetail.as_view(), name='recipe-detail'),
     #127.0.0.1:8000/recipes/id path
@@ -21,7 +19,7 @@ urlpatterns = [
     #127.0.0.1:8000/recipes/id/categories
     path('categories/<int:category_pk>/recipes', RecipeListByCategory.as_view(), name='recipe_list_by_category'),
     #127.0.0.1:8000/recipes/serving-options
-    path('servings-options/', views.Servings.as_view(), name='servings-list'),
+    path('servings-options/', Servings.as_view(), name='servings-list'),
     #127.0.0.1:8000/recipes/prep-options
     path('prep-options/', TimeOption.as_view(), name='prep-list'),
     #127.0.0.1:8000/recipes/cook-options
