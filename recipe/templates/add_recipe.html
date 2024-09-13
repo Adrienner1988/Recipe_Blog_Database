@@ -5,12 +5,12 @@
   </head>
   <body>
     <h1>Add Recipe</h1>
-    <form method="post" enctype="multipart/form-data">
+    <form method="POST" enctype="multipart/form-data">
       {% csrf_token %} {{ form.as_p }}
       <button type="submit">Submit</button>
     </form>
 
-    <p>
+ 
       <!-- method="post": Specifies that the form data will be sent to the server using the POST method when the form is submitted. This method is used when you want to send data to the server that might modify the server's state (e.g., creating a new recipe). -->
 
       <!-- enctype="multipart/form-data": Specifies that the form can handle file uploads, such as images, in addition to regular text data. -->
@@ -24,6 +24,6 @@
       <!-- {{ form.as_p }}: A Django template tag that renders the form fields defined in your Django form class (RecipeForm) as HTML paragraphs (<p> tags). This is a shorthand for rendering the form fields with basic formatting. -->
 
       <!-- <button type="submit">Submit</button>: A submit button that sends the form data to the server when clicked. The type="submit" attribute specifies that this button should submit the form. -->
-    </p>
+  
   </body>
 </html>

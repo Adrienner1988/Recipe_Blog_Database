@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Recipes, RecipeDetail, RecipeComments, RecipeListByCategory, CategoryList, TimeOption, Servings, add_recipe, recipe_list
+from .views import Recipes, RecipeDetail, RecipeComments, RecipeListByCategory, CategoryList, TimeOption, Serving, add_recipe, recipe_list, GetCSRFToken
 from recipe import views
 
 urlpatterns = [
@@ -19,11 +19,12 @@ urlpatterns = [
     #127.0.0.1:8000/recipes/id/categories
     path('categories/<int:category_pk>/recipes', RecipeListByCategory.as_view(), name='recipe_list_by_category'),
     #127.0.0.1:8000/recipes/serving-options
-    path('servings-options/', Servings.as_view(), name='servings-list'),
+    path('serving-options/', Serving.as_view(), name='serving-list'),
     #127.0.0.1:8000/recipes/prep-options
     path('prep-options/', TimeOption.as_view(), name='prep-list'),
     #127.0.0.1:8000/recipes/cook-options
     path('cook-options/', TimeOption.as_view(), name='cook-list'),
+    path('csrf_cookie', GetCSRFToken.as_view()),
 ]
 
 

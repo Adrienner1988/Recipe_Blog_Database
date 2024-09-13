@@ -3,6 +3,7 @@ myenv/
 *.pyc
 *.pyo
 __pycache__/
+settings.py
 
 # Django SQLite database
 db.sqlite3

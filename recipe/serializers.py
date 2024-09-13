@@ -1,35 +1,46 @@
 from rest_framework import serializers
-from .models import Recipe, Comment, Category, Servings, TimeOption
+from .models import Recipe, Comment, Category, Serving, TimeOption
 
 class TimeOptionSerializer(serializers.ModelSerializer):
     class Meta:
         model = TimeOption
-        fields = '__all__'
+        fields = ['id', 'time']
 
-class ServingsSerializer(serializers.ModelSerializer):
+class ServingSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Servings
-        fields = '__all__'
+        model = Serving
+        fields = ['id', 'serving']
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
-        fields = '__all__'
+        fields = ['id', 'name', 'image']
 
 class CommentsSerializer(serializers.ModelSerializer):
     class Meta:
         model= Comment
-        fields = '__all__'
+        fields = ['id', 'text', 'created_at', 'recipe']
 
 class RecipeSerializer(serializers.ModelSerializer):
     comments = CommentsSerializer(many=True, read_only=True)
     category = CategorySerializer()
     prep = TimeOptionSerializer()
     cook= TimeOptionSerializer()
-    servings = ServingsSerializer()
+    serving = ServingSerializer()
  
     class Meta:
         model = Recipe
-        fields = '__all__'  # Use '__all__' to include all fields of the model
+        fields = ['title', 'prep', 'cook', 'serving', 'category', 'ingredients', 'steps', 'image', 'comments']
+        
+
+class RecipeCreateSerializer(serializers.ModelSerializer):
+    prep = serializers.PrimaryKeyRelatedField(queryset=TimeOption.objects.all())
+    cook= serializers.PrimaryKeyRelatedField(queryset=TimeOption.objects.all())
+    serving = serializers.PrimaryKeyRelatedField(queryset=Serving.objects.all())
+    category = serializers.PrimaryKeyRelatedField(queryset=Category.objects.all())
+
+    class Meta:
+        model = Recipe
+        fields = ['title', 'prep', 'cook', 'serving', 'category', 'ingredients', 'steps', 'image']
 
   
