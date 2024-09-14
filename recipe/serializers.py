@@ -21,6 +21,11 @@ class CommentsSerializer(serializers.ModelSerializer):
         model= Comment
         fields = ['id', 'text', 'created_at', 'recipe']
 
+class CommentCreateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = ['recipe','text']
+        
 class RecipeSerializer(serializers.ModelSerializer):
     comments = CommentsSerializer(many=True, read_only=True)
     category = CategorySerializer()
