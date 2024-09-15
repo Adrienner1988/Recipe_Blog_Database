@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import Recipes, RecipeDetail, RecipeComments, RecipeListByCategory, CategoryList, TimeOption, Serving, add_recipe, recipe_list, add_comment, GetCSRFToken
+from .views import Recipes, RecipeDetail, RecipeComments, RecipeListByCategory, CategoryList, TimeOption, Serving, add_recipe, recipe_list, CommentCreateView , GetCSRFToken
 from recipe import views
 
 urlpatterns = [
@@ -11,7 +11,7 @@ urlpatterns = [
     #127.0.0.1:8000/recipes/id path
     path('recipes/<int:pk>/comments/', RecipeComments.as_view(), name='recipe-comments'),
     #127.0.0.1:8000/recipes/id/comments 
-    path('recipes/add-comment/', add_comment, name='add-comment'),
+    path('recipes/add-comment/', CommentCreateView.as_view(), name='add-comment'),
     #127.0.0.1:8000/recipes/add-comments
     path('recipes/add/', add_recipe, name='add-recipe'),
     #127.0.0.1:8000/recipes/id/add

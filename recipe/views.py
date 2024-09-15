@@ -120,18 +120,6 @@ class RecipeComments(generics.ListAPIView):
 class CommentCreateView(generics.CreateAPIView):
     queryset = Comment.objects.all()
     serializer_class = CommentCreateSerializer
- 
-    
-def add_comment(request):
-    if request.method == 'POST':
-        form = CommentForm(request.POST)
-        if form.is_valid():
-            print(request.POST)
-            form.save()
-            return render('recipe-detail')
-        else:
-            form = CommentForm()
-        return render(request, 'add_comment.html', {'form': form})
 
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
