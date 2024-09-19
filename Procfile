@@ -1,1 +1,1 @@
-web: gunicorn recipe_rainbow.wsgi
+web: gunicorn recipe_project.wsgi
