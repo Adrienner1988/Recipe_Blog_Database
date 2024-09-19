@@ -149,5 +149,5 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True  # Ensure this is set if you're using HTTPS
 
-ALLOWED_HOSTS = ['recipe_project.onrender.com']
+ALLOWED_HOSTS = ['recipe-blog-database.onrender.com']
 
