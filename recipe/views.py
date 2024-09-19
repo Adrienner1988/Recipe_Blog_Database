@@ -19,7 +19,7 @@ def index(request):
 # View for listing and creating recipes
 class Recipes(generics.ListCreateAPIView):
     queryset = Recipe.objects.all()
-    
+    serializer_class = RecipeCreateSerializer
     
 # Use different serializers for GET (list) and POST (create)
 def get_serializer_class(self):
