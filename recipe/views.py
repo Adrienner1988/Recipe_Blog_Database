@@ -1,5 +1,5 @@
 # Create your views here.
-from rest_framework import generics, permissions
+from rest_framework import generics, permissions, status
 from .models import Recipe, Comment, Category, Serving, TimeOption
 from .serializers import RecipeSerializer, CommentsSerializer, CategorySerializer, ServingSerializer, TimeOptionSerializer, RecipeCreateSerializer, CommentCreateSerializer
 from django.shortcuts import render, redirect
@@ -50,40 +50,48 @@ class RecipeDetail(generics.RetrieveUpdateDestroyAPIView):
     
 # Function to allow user to search recipes 
 def recipe_list(request):
-    title_query = request.GET.get('title', '')
-    ingredient_query = request.GET.get('ingredient', '')
-    category_query = request.GET.get('category', '')
+    try:
+        title_query = request.GET.get('title', '')
+        ingredient_query = request.GET.get('ingredient', '')
+        category_query = request.GET.get('category', '')
 
-    filters = Q()
-    if title_query:
-        filters &= Q(title__icontains=title_query)
-    if ingredient_query:
-        filters &= Q(ingredients__icontains=ingredient_query)
-    if category_query:
-        filters &= Q(category_id=category_query)
+        filters = Q()
+        if title_query:
+            filters &= Q(title__icontains=title_query)
+        if ingredient_query:
+            filters &= Q(ingredients__icontains=ingredient_query)
+        if category_query:
+            filters &= Q(category_id=category_query)
 
     # Filter recipes based on constructed filters
-    recipes = Recipe.objects.filter(filters).distinct()
+        recipes = Recipe.objects.filter(filters).distinct()
 
     # Prepare the recipe data to be returned
-    recipe_data = [
-        {
-            "id": recipe.id,
-            "title": recipe.title,
-            "ingredients": recipe.ingredients.splitlines(),
-            "steps": recipe.steps.splitlines(),
-            "image": recipe.image.url if recipe.image else None,
-        }
-        for recipe in recipes
-    ]
+        recipe_data = [
+            {
+                "id": recipe.id,
+                "title": recipe.title,
+                "ingredients": recipe.ingredients.splitlines(),
+                "steps": recipe.steps.splitlines(),
+                "image": recipe.image.url if recipe.image else None,
+            }
+            for recipe in recipes
+        ]
     
-    return JsonResponse(recipe_data, safe=False)
-
+        return JsonResponse(recipe_data, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
 
 # View for querying recipe categories
 class CategoryList(generics.ListAPIView):
     queryset = Category.objects.all()
     serializer_class = CategorySerializer
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # View for querying recipes by category
@@ -93,6 +101,12 @@ class RecipeListByCategory(generics.ListAPIView):
     def get_queryset(self):
         category_id = self.kwargs['category_id']
         return Recipe.objects.filter(category_id=category_id)
+    
+    def get(self, request, *args, **kwargs):
+        try:
+            return super().get(request, *args, **kwargs)
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 # View for querying time options
