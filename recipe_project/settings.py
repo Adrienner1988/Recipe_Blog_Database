@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-l_vm$_x9vzbxnek*)gn*x!o2a%_)(jpaehp8@yh(70$!a!y)vw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'localhost:5173',]
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'localhost:5173', 'recipe-blog-database.onrender.com']
 
 
 # Application definition
@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.common.CommonMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'recipe_project.urls'
@@ -124,6 +125,10 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+if not DEBUG:
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
@@ -136,6 +141,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     'http://127.0.0.1:5173',
+    'http://localhost:5173',
 ]
 
 CSRF_TRUSTED_ORIGINS = [
