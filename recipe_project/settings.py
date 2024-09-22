@@ -125,8 +125,11 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-if not DEBUG:
-    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+if DEBUG:
+    # During development, define STATICFILES_DIRS
+    STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]  # Ensure you have a 'static' folder in BASE_DIR
+else:
+    # In production, use Whitenoise for serving static files
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 # Default primary key field type
