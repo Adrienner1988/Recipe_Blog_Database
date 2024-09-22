@@ -1,0 +1,22 @@
+databases:
+  - name: recipe_db
+    plan: free
+    databaseName: recipe_db_rths
+    user: recipe_db_rths_user
+
+services:
+  - type: web
+    plan: free
+    name: recipe_db
+    runtime: python
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn recipe_project.asgi:application -k uvicorn.workers.UvicornWorker --bind 0.0.0.0:8000"
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: recipe_db
+          property: connectionString
+      - key: SECRET_KEY
+        generateValue: true
+      - key: WEB_CONCURRENCY
+        value: 4
