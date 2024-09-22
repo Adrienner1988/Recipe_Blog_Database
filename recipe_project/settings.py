@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-l_vm$_x9vzbxnek*)gn*x!o2a%_)(jpaehp8@yh(70$!a!y)vw
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '[::1]', 'localhost:5173', 'recipe-blog-database.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -124,6 +124,9 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 
 # Default primary key field type
