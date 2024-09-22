@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-l_vm$_x9vzbxnek*)gn*x!o2a%_)(jpaehp8@yh(70$!a!y)vw'
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY','django-insecure-l_vm$_x9vzbxnek*)gn*x!o2a%_)(jpaehp8@yh(70$!a!y)vw')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
@@ -164,5 +164,3 @@ CORS_ALLOW_CREDENTIALS = True  # Allow cookies to be included
 # CSRF settings
 CSRF_COOKIE_SAMESITE = 'None'
 CSRF_COOKIE_SECURE = True  # Ensure this is set if you're using HTTPS
-
-
