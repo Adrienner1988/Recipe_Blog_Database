@@ -15,7 +15,7 @@ urlpatterns = [
     #127.0.0.1:8000/recipes/add-comments
     path('recipes/add/', add_recipe, name='add-recipe'),
     #127.0.0.1:8000/recipes/id/add
-    path('recipes/search/', views.recipe_list, name='search-recipes'),
+    path('recipes/search/', recipe_list, name='search-recipes'),
     #127.0.0.1:8000/recipes/search
     path('categories/', CategoryList.as_view(), name='category-list'),
     #127.0.0.1:8000/recipes/id/categories
